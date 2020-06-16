@@ -35,5 +35,5 @@
 ![](images/dashboard.png)
 
 **Files Page**
-![](images/FilesPage.png)
+![](images/filesPage.png)
 
