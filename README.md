@@ -2,6 +2,7 @@
 
 ## Idea and Users
 - A website for employers to keep track of employees work hours and productivity while they work from home
+- this is accomplished by using instant messaging and login tracking to help connect employees working from home
 
 ## MVP 
 - Login and register functionality as employee or admin
@@ -22,7 +23,17 @@
 - audio call and video call
 - make a file storage that can be accessed based on authentication 
 
-## Database
-User
-```SQL
-create table users
+## Wireframe
+### Authentication
+**Login**
+![](images/login.png)
+
+**Register**
+![](images/register.png)
+
+**Dashboard**
+![](images/dashboard.png)
+
+**Files Page**
+![](images/FilesPage.png)
+
