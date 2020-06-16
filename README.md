@@ -22,6 +22,9 @@
 - ability to create subgroups within a company and message in those groups
 - audio call and video call
 - make a file storage that can be accessed based on authentication 
+- create a projects tab where an admin can create a project. all users can view and update the project status
+- project with include a checklist of items to accomplish
+- project status will update according to the checklist
 
 ## Wireframe
 ### Authentication
@@ -36,4 +39,12 @@
 
 **Files Page**
 ![](images/filesPage.png)
+
+## Routes
+- dynamic messaging route for each employee
+- files page route
+- timesheet route
+- dynamic timesheet route if user is admin
+
+## Database
 
