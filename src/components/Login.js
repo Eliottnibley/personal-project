@@ -2,13 +2,29 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 import './Login.css'
 import {Link} from 'react-router-dom'
+import Axios from 'axios'
+import {connect} from 'react-redux'
+import {loginUser} from '../redux/userReducer'
 
-function Login (prop) {
+function Login (props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   
   function submitForm (e) {
     e.preventDefault()
+
+    const user = {
+      email: email,
+      password: password
+    }
+
+    Axios.post('/api/auth/login', user)
+    .then(res => {
+      props.loginUser(res.data)
+    })
+    .catch(err => {
+      alert('Email or Password is incorrect')
+    })
   }
   
   return (
@@ -24,4 +40,6 @@ function Login (prop) {
   )
 }
 
-export default Login
+const mapStateToProps = reduxState => reduxState
+
+export default connect(mapStateToProps, {loginUser})(Login)

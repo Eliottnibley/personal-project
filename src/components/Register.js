@@ -1,6 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import './Register.css'
+import Axios from 'axios'
 
 function Register (props) {
   const [firstname, setFirstname] = useState('')
@@ -11,7 +12,20 @@ function Register (props) {
 
   function submitForm (e) {
     e.preventDefault()
-
+    const user = {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password,
+      profilePic: profilePic
+    }
+    Axios.post('/api/auth/register', user)
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(err => {
+      alert('The email provided is already linked to an account')
+    })
   }
 
   return (

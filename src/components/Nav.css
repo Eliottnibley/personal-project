@@ -1,0 +1,25 @@
+.nav-container {
+  width: 100vw;
+  height: 40px;
+  background-color: rgb(81, 81, 253);
+  position: fixed;
+  top: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-menu ul{
+  display: flex;
+  align-items: center;
+  list-style: none;
+  color: white;
+}
+
+.nav-menu ul li {
+  margin-right: 20px;
+}
+
+.nav-menu ul li:hover {
+  cursor: pointer;
+}
