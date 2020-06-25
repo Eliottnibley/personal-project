@@ -1,10 +1,11 @@
 require('dotenv').config()
 const express = require('express')
 const socketio = require('socket.io')
-const http = require('http')
 const massive = require('massive')
 const session = require('express-session')
 const { Console } = require('console')
+const authCtlr = require('./controllers/AuthController')
+const mailer = require('./mailer')
 
 const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING} = process.env
 
@@ -32,6 +33,15 @@ massive({
   app.set('db', db)
   console.log('connected to database')
 })
+
+// endpoints
+app.post('/api/auth/register', authCtlr.register)
+app.post('/api/auth/login', authCtlr.login)
+app.delete('/api/auth/logout', authCtlr.logout)
+app.post('/api/auth/registercompany', authCtlr.createCompany)
+
+// mailer endpoint
+app.post('/api/mailer', mailer.mailer)
 
 const server = app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`))
 
