@@ -2,16 +2,12 @@ const nodemailer = require('nodemailer')
 
 module.exports = {
   mailer: async (req, res) => {
-    let testAccount = await nodemailer.createTestAccount()
-    console.log(testAccount)
   
     let transporter = await nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      post: 587,
-      secure: false,
+      service: 'gmail',
       auth: {
-        user: testAccount.user,
-        pass: testAccount.pass
+        user: 'e.nibley@gmail.com',
+        pass: 'eliottnibley1'
       }
     })
 

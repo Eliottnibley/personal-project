@@ -9,7 +9,7 @@ function Nav (props) {
   return (
     <div className='nav-container'>
       <div>
-        {props.user.firstname}
+        
       </div>
       <div className='nav-menu'>
         <ul>
