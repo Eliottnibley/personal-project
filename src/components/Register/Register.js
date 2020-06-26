@@ -2,6 +2,9 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 import './Register.css'
 import Axios from 'axios'
+import {connect} from 'react-redux'
+import {loginUser} from './../redux/userReducer'
+import {useHistory} from 'react-router-dom'
 
 function Register (props) {
   const [firstname, setFirstname] = useState('')
@@ -9,23 +12,42 @@ function Register (props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [profilePic, setProfilePic] = useState('')
+  const {companyId} = props.match.params
+
+  const history = useHistory()
 
   function submitForm (e) {
     e.preventDefault()
+
+    if (!firstname || !lastname || !email || !password || !profilePic){
+      return alert('Please fill in all information')
+    }
+
     const user = {
       firstname: firstname,
       lastname: lastname,
       email: email,
       password: password,
-      profilePic: profilePic
+      profilePic: profilePic,
+      companyId: companyId
     }
+
+    if (parseInt(companyId) === 0){
+      user.isAdmin = false
+    }
+    else {
+      user.isAdmin = true
+    }
+    
     Axios.post('/api/auth/register', user)
     .then(res => {
-      console.log(res.data)
+      props.loginUser(res.data)
+      history.push('/')
     })
     .catch(err => {
       alert('The email provided is already linked to an account')
     })
+    
   }
 
   return (
@@ -42,4 +64,6 @@ function Register (props) {
   )
 }
 
-export default Register
+const mapStateToProps = reduxState => reduxState
+
+export default connect(mapStateToProps, {loginUser})(Register)

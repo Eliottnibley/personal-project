@@ -34,7 +34,7 @@ function Login (props) {
         <input placeholder='Password' value={password} onChange={e => setPassword(e.target.value)}/>
         <button onClick={(e) => submitForm(e)}>Login</button>
         <p>Don't have an account?</p>
-        <Link to='/register'>Click Here</Link>
+        <Link to='/register/0'>Click Here</Link>
       </form>
     </div>
   )

@@ -31,28 +31,46 @@ module.exports = {
 
   register: async (req, res) => {
     const db = req.app.get('db')
-    const {firstname, lastname, email, password, profilePic, isAdmin} = req.body
+    const {firstname, lastname, email, password, profilePic, isAdmin, companyId} = req.body
+    company = parseInt(companyId)
 
     const existingUser = await db.checkUser(email)
+
     if(existingUser[0]){
       return res.status(409).send('user already exists')
     }
 
     const salt = bcrypt.genSaltSync(10)
     const hash = bcrypt.hashSync(password, salt)
-
-    const user = await db.registerUser(firstname, lastname, email, hash, profilePic, isAdmin)
-
-    req.session.user = {
-      userId: user[0].id,
-      firstname: user[0].firstname,
-      lastname: user[0].lastname,
-      email: user[0].email,
-      profilePic: user[0].profile_pic,
-      isAdmin: user[0].is_admin,
-      companyId: user[0].company_id
+    
+    if (company === 0){
+      const user = await db.registerUser(firstname, lastname, email, hash, profilePic, isAdmin)
+      
+      req.session.user = {
+        userId: user[0].id,
+        firstname: user[0].firstname,
+        lastname: user[0].lastname,
+        email: user[0].email,
+        profilePic: user[0].profile_pic,
+        isAdmin: user[0].is_admin,
+        companyId: user[0].company_id
+      }
+      return res.status(200).send(req.session.user)
     }
-    return res.status(200).send(req.session.user)
+    else {
+      const user = await db.registerUserAndCompany(firstname, lastname, email, hash, profilePic, isAdmin, companyId)
+
+      req.session.user = {
+        userId: user[0].id,
+        firstname: user[0].firstname,
+        lastname: user[0].lastname,
+        email: user[0].email,
+        profilePic: user[0].profile_pic,
+        isAdmin: user[0].is_admin,
+        companyId: user[0].company_id
+      }
+      return res.status(200).send(req.session.user)
+    }
   },
 
   logout: (req, res) => {
@@ -72,7 +90,7 @@ module.exports = {
 
     const company = await db.registerCompany(name)
 
-    res.status(200).send(company)
+    res.status(200).send(company[0])
   },
 
   joinCompany: async (req, res) => {

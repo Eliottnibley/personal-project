@@ -1,7 +1,7 @@
 .nav-container {
   width: 100vw;
   height: 40px;
-  background-color: rgb(81, 81, 253);
+  background-color: dodgerblue;
   position: fixed;
   top: 0px;
   display: flex;
