@@ -2,13 +2,29 @@ import React from 'react'
 import './Nav.css'
 import {useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
+import { logoutUser } from '../../redux/userReducer'
+import Axios from 'axios'
 
 function Nav (props) {
   const history = useHistory()
 
+  if (!props.isLoggedIn){
+    history.push('/')
+  }
+
   function toggleSelect (path) {
     history.push(path)
     // insert dynamic styling for the menu selector
+  }
+
+  function logout () {
+    Axios.delete('/api/auth/logout')
+    .then(res => {
+      props.logoutUser()
+    })
+    .catch (err => {
+      console.log('logout did not work')
+    })
   }
 
   if (!props.isLoggedIn) {
@@ -28,19 +44,18 @@ function Nav (props) {
       </div>
     )
   }
-
   else {
     return (
       <div className='nav-container'>
-        <div>
-          
-        </div>
+        <h1>
+          WorkSpace
+        </h1>
         <div className='nav-menu'>
           <ul>
             <li onClick={() => history.push('/')}>Home</li>
-            <li onClick={() => history.push('/getstarted')}>Company</li>
+            <li onClick={() => history.push('/company')}>Company</li>
             <li onClick={() => history.push('/contactus')}>Contact Us</li>
-            <li onClick={() => history.push('/login')}>Logout</li>
+            <li onClick={() => logout()}>Logout</li>
           </ul>
         </div>
       </div>
@@ -50,4 +65,4 @@ function Nav (props) {
 
 const mapStateToProps = reduxState => reduxState
 
-export default connect(mapStateToProps)(Nav)
+export default connect(mapStateToProps, {logoutUser})(Nav)

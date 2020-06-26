@@ -16,6 +16,10 @@ function Login (props) {
   function submitForm (e) {
     e.preventDefault()
 
+    if (!email || !password){
+      return alert('Please fill in all information')
+    }
+
     const user = {
       email: email,
       password: password
