@@ -1,6 +1,6 @@
 import React from 'react'
 import './RegisterCompany.css'
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import Axios from 'axios'
 import {useHistory} from 'react-router-dom'
 

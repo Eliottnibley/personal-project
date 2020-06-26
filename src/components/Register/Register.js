@@ -1,9 +1,9 @@
 import React from 'react'
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import './Register.css'
 import Axios from 'axios'
 import {connect} from 'react-redux'
-import {loginUser} from './../redux/userReducer'
+import {loginUser} from '../../redux/userReducer'
 import {useHistory} from 'react-router-dom'
 
 function Register (props) {
