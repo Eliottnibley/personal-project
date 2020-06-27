@@ -35,6 +35,11 @@
 
 .nav-menu ul li:hover {
   cursor: pointer;
-  background-color: rgb(61, 157, 253);
+  background-color: rgb(83, 168, 253);
+  border-radius: 10px 10px 0px 0px;
+}
+
+.selected {
+  background-color: deepskyblue;
   border-radius: 10px 10px 0px 0px;
 }

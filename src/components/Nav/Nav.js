@@ -1,68 +1,88 @@
-import React from 'react'
+import React, {Component} from 'react'
 import './Nav.css'
-import {useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
 import { logoutUser } from '../../redux/userReducer'
 import Axios from 'axios'
+import {withRouter} from 'react-router-dom'
 
-function Nav (props) {
-  const history = useHistory()
-
-  if (!props.isLoggedIn){
-    history.push('/')
+class Nav extends Component {
+  constructor () {
+    super()
+    this.state = {
+      selectedPath: ''
+    }
+    this.toggleSelect = this.toggleSelect.bind(this)
   }
 
-  function toggleSelect (path) {
+  componenDidMount () {
+    
+  }
+
+  toggleSelect (path){
+    const {selectedPath} = this.state
+    const prevElem = document.getElementsByClassName('selected')[0]
+    
+    if (prevElem) {
+      prevElem.className = selectedPath
+    }
+
+    const {history} = this.props
     history.push(path)
-    // insert dynamic styling for the menu selector
+    
+    const elem = document.getElementsByClassName(path)[0]
+
+    elem.className = 'selected'
+    this.setState({selectedPath: path})
   }
 
-  function logout () {
+  logout () {
     Axios.delete('/api/auth/logout')
     .then(res => {
-      props.logoutUser()
+      this.props.logoutUser()
     })
     .catch (err => {
       console.log('logout did not work')
     })
   }
 
-  if (!props.isLoggedIn) {
-    return (
-      <div className='nav-container'>
-        <h1>
-          WorkSpace
-        </h1>
-        <div className='nav-menu'>
-          <ul>
-            <li className='/' onClick={() => toggleSelect('/')}>Home</li>
-            <li className='/getstarted' onClick={() => toggleSelect('/getstarted')}>Get Started</li>
-            <li className='/contactus' onClick={() => toggleSelect('/contactus')}>Contact Us</li>
-            <li className='/login' onClick={() => toggleSelect('/login')}>Login</li>
-          </ul>
+  render() {
+    if (!this.props.isLoggedIn) {
+      return (
+        <div className='nav-container'>
+          <h1>
+            WorkSpace
+          </h1>
+          <div className='nav-menu'>
+            <ul>
+              <li className='/' onClick={() => this.toggleSelect('/')}>Home</li>
+              <li className='/getstarted' onClick={() => this.toggleSelect('/getstarted')}>Get Started</li>
+              <li className='/contactus' onClick={() => this.toggleSelect('/contactus')}>Contact Us</li>
+              <li className='/login' onClick={() => this.toggleSelect('/login')}>Login</li>
+            </ul>
+          </div>
         </div>
-      </div>
-    )
-  }
-  else {
-    return (
-      <div className='nav-container'>
-        <h1>
-          WorkSpace
-        </h1>
-        <div className='nav-menu'>
-          <ul>
-            <li onClick={() => history.push('/')}>Home</li>
-            <li onClick={() => history.push('/company')}>Company</li>
-            <li onClick={() => history.push('/contactus')}>Contact Us</li>
-            <li onClick={() => logout()}>Logout</li>
-          </ul>
+      )
+    }
+    else {
+      return (
+        <div className='nav-container'>
+          <h1>
+            WorkSpace
+          </h1>
+          <div className='nav-menu'>
+            <ul>
+              <li className='/' onClick={() => this.toggleSelect('/')}>Home</li>
+              <li className='/company' onClick={() => this.toggleSelect('/company')}>Company</li>
+              <li className='/contactus' onClick={() => this.toggleSelect('/contactus')}>Contact Us</li>
+              <li onClick={() => this.logout()}>Logout</li>
+            </ul>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 
 const mapStateToProps = reduxState => reduxState
 
-export default connect(mapStateToProps, {logoutUser})(Nav)
+export default withRouter(connect(mapStateToProps, {logoutUser})(Nav))
