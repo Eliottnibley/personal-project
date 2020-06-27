@@ -8,6 +8,7 @@ import ChatGroups from '../ChatGroups/ChatGroups'
 import Files from '../Files/Files'
 import Projects from '../Projects/Projects'
 import Admin from '../Admin/Admin'
+import ManageMembers from '../ManageMembers/ManageMembers'
 
 function Company (props) {
   const [selectedPath, setSelectedPath] = useState('')
@@ -41,6 +42,7 @@ function Company (props) {
             <Route path='/company/files' component={Files}/>
             <Route path='/company/projects' component={Projects}/>
             <Route path='/company/admin' component={Admin}/>
+            <Route path='/company/managemembers' component={ManageMembers}/>
           </Switch>
         </div>
         <div className='company-nav'>

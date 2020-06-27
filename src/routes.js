@@ -8,7 +8,7 @@ import Company from './components/Company/Company'
 
 export default (
   <Switch>
-    <Route path='/login' component={Login}/>
+    <Route path='/login/:companyId' component={Login}/>
     <Route path='/register/:companyId' component={Register}/>
     <Route path='/getstarted' component={GetStarted}/>
     <Route path='/registercompany' component={RegisterCompany}/>

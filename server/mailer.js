@@ -2,12 +2,13 @@ const nodemailer = require('nodemailer')
 
 module.exports = {
   mailer: async (req, res) => {
+    const {email, companyId} = req.body
   
     let transporter = await nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'e.nibley@gmail.com',
-        pass: 'eliottnibley1'
+        user: 'workspace.mailer@gmail.com',
+        pass: 'El!ott624'
       }
     })
 
@@ -21,15 +22,20 @@ module.exports = {
       }
     })
 
-    let info = await transporter.sendMail({
-      from: 'e.nibley@gmail.com',
-      to: 'e.nibley@gmail.com',
-      subject: 'Hello!',
-      text: 'this is your first mail from nodmailer'
+    const message = {
+      from: 'WorkSpace <workspace.mailer@gmail.com>',
+      to: email,
+      subject: 'Join Company',
+      html: `<p>Click <a href="http://localhost:3000/#/login/${companyId}">here</a> to join company</p>`
+    }
+
+    let info = await transporter.sendMail(message)
+    .then(() => {
+      return res.sendStatus(200)
     })
-
-    console.log(info.messageId)
-
-    res.sendStatus(200)
+    .catch((err) => {
+      console.log(err)
+      res.status(500).send(err)
+    })
   }
 }
