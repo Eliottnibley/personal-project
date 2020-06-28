@@ -57,7 +57,7 @@ class Nav extends Component {
               <li className='/' onClick={() => this.toggleSelect('/')}>Home</li>
               <li className='/getstarted' onClick={() => this.toggleSelect('/getstarted')}>Get Started</li>
               <li className='/contactus' onClick={() => this.toggleSelect('/contactus')}>Contact Us</li>
-              <li className='/login/0' onClick={() => this.toggleSelect('/login/0')}>Login</li>
+              <li className='/login' onClick={() => this.toggleSelect('/login')}>Login</li>
             </ul>
           </div>
         </div>

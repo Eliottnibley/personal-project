@@ -82,15 +82,32 @@ module.exports = {
     const db = req.app.get('db')
     const {name} = req.body
 
-    const existingCompany = await db.checkCompany(name)
-
-    if (existingCompany[0]) {
-      return res.status(409).send('company name is already taken')
+    function genCode () {
+      const options = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      let accessCode = ''
+      
+      for (let i = 0; i < 10; i++) {
+        accessCode += options[Math.floor(Math.random() * options.length)]
+      }
+      return accessCode
     }
 
-    const company = await db.registerCompany(name)
+    const accessCode = genCode()
+
+    const company = await db.registerCompany(name, accessCode)
 
     res.status(200).send(company[0])
+  },
+
+  getCode: async (req, res) => {
+    const db = req.app.get('db')
+    const {companyId} = req.body
+
+    let accessCode = await db.getCode(companyId)
+    accessCode = accessCode[0]
+
+
+    res.status(200).send(accessCode)
   },
 
   joinCompany: async (req, res) => {

@@ -1,2 +1,2 @@
 select * from company
-where name = $1
+where access_code = $1

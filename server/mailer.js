@@ -2,7 +2,8 @@ const nodemailer = require('nodemailer')
 
 module.exports = {
   mailer: async (req, res) => {
-    const {email, companyId} = req.body
+    const {email, accessCode} = req.body
+    console.log(accessCode)
   
     let transporter = await nodemailer.createTransport({
       service: 'gmail',
@@ -26,7 +27,7 @@ module.exports = {
       from: 'WorkSpace <workspace.mailer@gmail.com>',
       to: email,
       subject: 'Join Company',
-      html: `<p>Click <a href="http://localhost:3000/#/login/${companyId}">here</a> to join company</p>`
+      text: `The code to join the company you have been invited to is ${accessCode}`
     }
 
     let info = await transporter.sendMail(message)

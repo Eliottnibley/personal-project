@@ -1,6 +1,6 @@
 insert into company
-(name)
-values ($1);
+(name, access_code)
+values ($1, $2);
 
 select * from company
-where name = $1
+where access_code = $2

@@ -3,7 +3,8 @@ drop table if exists company;
 
 create table company (
     id serial primary key,
-    name varchar(100)
+    name varchar(100),
+    access_code varchar(10)
 );
 
 create table work_users (

@@ -39,6 +39,7 @@ app.post('/api/auth/register', authCtlr.register)
 app.post('/api/auth/login', authCtlr.login)
 app.delete('/api/auth/logout', authCtlr.logout)
 app.post('/api/auth/registercompany', authCtlr.createCompany)
+app.post('/api/auth/accesscode', authCtlr.getCode)
 
 // mailer endpoint
 app.post('/api/mailer', mailer.mailer)

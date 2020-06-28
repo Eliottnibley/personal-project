@@ -6,9 +6,16 @@ function ManageMembers (props) {
   const [email, setEmail] = useState('')
 
   function sendInvite () {
-    Axios.post('/api/mailer', {email: email, companyId: props.user.companyId})
-    .then(res => {
+    Axios.post('/api/auth/accesscode', {companyId: props.user.companyId})
+    .then (res => {
+      const {access_code} = res.data
+      Axios.post('/api/mailer', {email: email, accessCode: access_code})
+      .then(res => {
       console.log('the email sent')
+      })
+      .catch(err => {
+      console.log(err)
+      })
     })
     .catch(err => {
       console.log(err)
