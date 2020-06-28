@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import Axios from 'axios'
 import './Company.css'
 import { connect } from 'react-redux'
 import {useHistory} from 'react-router-dom'
