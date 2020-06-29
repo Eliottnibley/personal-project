@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Company.css'
 import { connect } from 'react-redux'
 import {useHistory} from 'react-router-dom'
@@ -8,14 +8,33 @@ import Files from '../Files/Files'
 import Projects from '../Projects/Projects'
 import Admin from '../Admin/Admin'
 import ManageMembers from '../ManageMembers/ManageMembers'
+import Axios from 'axios'
+import Member from '../Member/Member'
 
 function Company (props) {
   const [selectedPath, setSelectedPath] = useState('')
+  const [members, setmembers] = useState([])
   const history = useHistory()
 
-  if(!props.isLoggedIn){
-    history.push('/')
-  }
+  useEffect(() => {
+    if(!props.isLoggedIn){
+      history.push('/')
+    }
+  
+    if(!props.user.companyId){
+      history.push('/joincompany')
+    }
+    else {
+      Axios.get(`/api/company/members/${props.user.companyId}`)
+      .then(res => {
+        setmembers(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  }, [history, props.isLoggedIn, props.user.companyId])
+
 
   function togglePath (path) {
     const prevElem = document.getElementsByClassName('company-selected')[0]
@@ -32,6 +51,12 @@ function Company (props) {
     setSelectedPath(path)
   }
   
+  const membersMap = members.map(elem => {
+    return (
+      <Member member={elem} key={elem.id}/>
+    )
+  })
+
   if(props.user.isAdmin){
     return (
       <div className='company-container'>
@@ -52,6 +77,9 @@ function Company (props) {
               <li className='/company/projects' onClick={() => togglePath('/company/projects')}>Projects</li>
               <li className='/company/admin' onClick={() => togglePath('/company/admin')}>Admin</li>
             </ul>
+          </div>
+          <div className='memberlist'>
+            {membersMap}
           </div>
         </div>
       </div>
@@ -74,6 +102,9 @@ function Company (props) {
               <li className='/company/files' onClick={() => togglePath('/company/files')}>Files</li>
               <li className='/company/projects' onClick={() => togglePath('/company/projects')}>Projects</li>
             </ul>
+          </div>
+          <div className='memberlist'>
+            {membersMap}
           </div>
         </div>
       </div>

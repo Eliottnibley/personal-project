@@ -15,6 +15,7 @@ export function loginUser(user) {
   return action
 }
 
+
 export function logoutUser () {
   const action = {
     type: LOGOUT_USER,

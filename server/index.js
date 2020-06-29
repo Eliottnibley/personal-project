@@ -6,6 +6,7 @@ const session = require('express-session')
 const { Console } = require('console')
 const authCtlr = require('./controllers/AuthController')
 const mailer = require('./mailer')
+const compCtlr = require('./controllers/companyController')
 
 const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING} = process.env
 
@@ -40,9 +41,13 @@ app.post('/api/auth/login', authCtlr.login)
 app.delete('/api/auth/logout', authCtlr.logout)
 app.post('/api/auth/registercompany', authCtlr.createCompany)
 app.post('/api/auth/accesscode', authCtlr.getCode)
+app.put('/api/auth/joincompany', authCtlr.joinCompany)
 
 // mailer endpoint
 app.post('/api/mailer', mailer.mailer)
+
+// company endpoints
+app.get('/api/company/members/:id', compCtlr.getMembers)
 
 const server = app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`))
 

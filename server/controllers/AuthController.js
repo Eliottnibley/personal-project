@@ -83,7 +83,7 @@ module.exports = {
     const {name} = req.body
 
     function genCode () {
-      const options = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+      const options = 'abcdefghjkmnopqrstuvwxyzABCDEFGHJKMNOPQRSTUVWXYZ0123456789'
       let accessCode = ''
       
       for (let i = 0; i < 10; i++) {
@@ -111,6 +111,29 @@ module.exports = {
   },
 
   joinCompany: async (req, res) => {
+    const db = req.app.get('db')
+    const {userId, accessCode} = req.body
 
+    const company = await db.checkCompany(accessCode)
+
+    if(!company[0]) {
+      return res.status(404).send('Access code does not associate with any company')
+    }
+    
+    const companyId = company[0].id
+
+    const user = await db.joinCompany(userId, companyId)
+
+    req.session.user = {
+      userId: user[0].id,
+      firstname: user[0].firstname,
+      lastname: user[0].lastname,
+      email: user[0].email,
+      profilePic: user[0].profile_pic,
+      isAdmin: user[0].is_admin,
+      companyId: user[0].company_id
+    }
+
+    return res.status(200).send(req.session.user)
   }
 }
