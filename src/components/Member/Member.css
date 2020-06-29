@@ -1,0 +1,7 @@
+.member-container {
+  width: 280px;
+  min-height: 60px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 3px gray;
+  margin-top: 10px;
+}

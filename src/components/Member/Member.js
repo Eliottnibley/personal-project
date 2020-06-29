@@ -5,7 +5,7 @@ function Member (props) {
   const {member} = props
   return (
     <div className='member-container'>
-      {`this is ${member.firstname}`}
+      {`this is ${member.firstname} ${member.lastname}`}
     </div>
   )
 }
