@@ -1,7 +1,90 @@
 .member-container {
   width: 280px;
-  min-height: 60px;
-  border-radius: 30px;
+  min-height: 70px;
+  border-radius: 5px 35px 35px 35px;
   box-shadow: 0px 0px 3px gray;
   margin-top: 10px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  position: relative;
+}
+
+.online-indicator {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 10px;
+  height: 10px;
+  background-color: rgb(79, 255, 79);
+  border-radius: 50%;
+}
+
+.offline-indicator {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 10px;
+  height: 10px;
+  background-color: rgb(255, 77, 77);
+  border-radius: 50%;
+}
+
+.pic-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 3px gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pic-container > img {
+  height: 100%;
+}
+
+.member-info {
+  height: 100%;
+  width: 190px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 12px;
+}
+
+.member-info > div {
+  width: 100%;
+}
+
+.member-name {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.member-email {
+  height: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.member-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.chatbutton {
+  font-size: 12px;
+  height: 20px;
+  width: 40px;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

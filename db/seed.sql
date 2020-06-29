@@ -1,5 +1,3 @@
-drop table if exists work_users;
-drop table if exists company;
 
 create table company (
     id serial primary key,

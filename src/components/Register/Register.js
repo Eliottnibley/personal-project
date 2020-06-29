@@ -52,6 +52,9 @@ function Register (props) {
 
   return (
     <div className='register-container'>
+      <div className='pic-preview-container'>
+        <img src={profilePic}/>
+      </div>
       <form onSubmit={e => submitForm(e)}>
         <input placeholder='Email' value={email} onChange={e => setEmail(e.target.value)}/>
         <input placeholder='Password' value={password} onChange={e => setPassword(e.target.value)}/>
