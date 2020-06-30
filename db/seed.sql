@@ -15,3 +15,20 @@ create table work_users (
     is_admin boolean,
     company_id int references company(id)
 );
+
+create table rooms (
+    id serial primary key
+);
+
+create table user_chats (
+    id serial primary key,
+    user_id int references work_users(id),
+    chat_id int references rooms(id)
+);
+
+create table messages (
+    id serial primary key,
+    time timestamp,
+    sender int references work_users(id),
+    room_id int references rooms(id)
+)

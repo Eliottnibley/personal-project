@@ -42,6 +42,7 @@ function Register (props) {
     Axios.post('/api/auth/register', user)
     .then(res => {
       props.loginUser(res.data)
+
       history.push('/')
     })
     .catch(err => {

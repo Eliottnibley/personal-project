@@ -1,5 +1,8 @@
+import io from 'socket.io-client'
+
 const initialState = {
   user: {},
+  socket: io.connect(':3030'),
   isLoggedIn: false
 }
 
@@ -9,6 +12,7 @@ const LOGOUT_USER = 'LOGOUT_USER'
 export function loginUser(user) {
   const action = {
     type: LOGIN_USER,
+    socket: io.connect(':3030'),
     payload: user
   }
 
@@ -28,7 +32,7 @@ export function logoutUser () {
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOGIN_USER:
-      return{...state, user: action.payload, isLoggedIn: true}
+      return{...state, user: action.payload, socket: action.socket, isLoggedIn: true}
     case LOGOUT_USER:
       return {...state, ...action.payload}
     default:

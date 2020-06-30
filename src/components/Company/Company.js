@@ -3,6 +3,7 @@ import './Company.css'
 import { connect } from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {Switch, Route} from 'react-router-dom'
+import io from 'socket.io-client'
 import ChatGroups from '../ChatGroups/ChatGroups'
 import Files from '../Files/Files'
 import Projects from '../Projects/Projects'
@@ -14,6 +15,7 @@ import Member from '../Member/Member'
 function Company (props) {
   const [selectedPath, setSelectedPath] = useState('')
   const [members, setmembers] = useState([])
+  const [membersLoggedIn, setMembersLoggedIn] = useState([])
   const history = useHistory()
 
   useEffect(() => {
@@ -31,6 +33,20 @@ function Company (props) {
       })
       .catch(err => {
         console.log(err)
+      })
+
+      Axios.get(`/api/currentLogins?companyId=${props.user.companyId}`)
+      .then(res => {
+        setMembersLoggedIn(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+      props.socket.emit('join room', {room: `company ${props.user.companyId} room`})
+
+      props.socket.on('logged in array updated', data => {
+        setMembersLoggedIn(data)
       })
     }
   }, [history, props.isLoggedIn, props.user.companyId])
@@ -53,7 +69,7 @@ function Company (props) {
   
   const membersMap = members.map(elem => {
     return (
-      <Member member={elem} key={elem.id}/>
+      <Member member={elem} loggedIn={membersLoggedIn.includes(elem.id)} key={elem.id}/>
     )
   })
 

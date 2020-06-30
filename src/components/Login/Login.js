@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useState} from 'react'
 import './Login.css'
 import {Link} from 'react-router-dom'
@@ -6,6 +6,7 @@ import Axios from 'axios'
 import {connect} from 'react-redux'
 import {loginUser} from '../../redux/userReducer'
 import {useHistory} from 'react-router-dom'
+import io from 'socket.io-client'
 
 function Login (props) {
   const [email, setEmail] = useState('')
@@ -28,10 +29,13 @@ function Login (props) {
     Axios.post('/api/auth/login', user)
     .then(res => {
       props.loginUser(res.data)
+
+      props.socket.emit('user logged in', {userId: res.data.userId, companyId: res.data.companyId, room: `company ${res.data.companyId} room`})
+
       history.push('/')
     })
     .catch(err => {
-      alert('Email or Password is incorrect')
+      alert(err)
     })
   }
   

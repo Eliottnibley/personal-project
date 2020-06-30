@@ -10,17 +10,18 @@
   position: relative;
 }
 
-.online-indicator {
+.online-indicator-true {
   position: absolute;
   left: 2px;
   top: 2px;
   width: 10px;
   height: 10px;
+  box-shadow: 0px 0px 2px gray;
   background-color: rgb(79, 255, 79);
   border-radius: 50%;
 }
 
-.offline-indicator {
+.online-indicator-false {
   position: absolute;
   left: 2px;
   top: 2px;

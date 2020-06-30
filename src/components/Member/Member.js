@@ -5,7 +5,7 @@ function Member (props) {
   const {member} = props
   return (
     <div className='member-container'>
-      <div className='online-indicator'></div>
+      <div className={`online-indicator-${props.loggedIn}`}></div>
       <div className='pic-container'>
         <img src={member.profile_pic}/>
       </div>

@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import { logoutUser } from '../../redux/userReducer'
 import Axios from 'axios'
 import {withRouter} from 'react-router-dom'
+import io from 'socket.io-client'
 
 class Nav extends Component {
   constructor () {
@@ -38,6 +39,10 @@ class Nav extends Component {
   logout () {
     Axios.delete('/api/auth/logout')
     .then(res => {
+      if(this.props.user.companyId){
+        this.props.socket.emit('user logged out', {userIdRemove: this.props.user.userId, companyId: this.props.user.companyId,
+        room: `company ${this.props.user.companyId} room`})
+      }
       this.props.logoutUser()
     })
     .catch (err => {

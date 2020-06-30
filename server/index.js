@@ -53,6 +53,53 @@ const server = app.listen(SERVER_PORT, () => console.log(`Listening on port ${SE
 
 const io = socketio(server)
 
+let loggedInUsers = []
+
+// takes in an object with the properties of userId and companyId. this function shoulc br triggered when a user logs in.
+const updateLoggedIn = (user) => {
+  if(user.userIdRemove) {
+    const index = loggedInUsers.map(e => {
+      return e.userId
+    }).indexOf(user.userIdRemove)
+    loggedInUsers.splice(index, 1)
+  }
+  else if(user.userId && user.companyId){
+    loggedInUsers.push(user)
+  }
+  else {
+  }
+  
+  let companyloggedInUsers = []
+  for (let i = 0; i < loggedInUsers.length; i++){
+    if(loggedInUsers[i].companyId === user.companyId){
+      companyloggedInUsers.push(loggedInUsers[i].userId)
+    }
+  }
+  return companyloggedInUsers
+}
+
+// this will return the users curently logged in
+app.get('/api/currentLogins', (req, res) => {
+  const {companyId} = req.query
+  const companyloggedIn = updateLoggedIn({companyId: parseInt(companyId)})
+  
+  res.status(200).send(companyloggedIn)
+})
+
 io.on('connection', socket => {
-  console.log('socket connected')
+
+  socket.on('join room', data => {
+    socket.join(data.room)
+  })
+
+  // socket to keep track of who is logged in
+  socket.on('user logged in', data => {
+    let companyloggedInUsers = updateLoggedIn(data)
+    io.to(data.room).emit('logged in array updated', companyloggedInUsers)
+  })
+
+  socket.on('user logged out', (data) => {
+    let companyloggedInUsers = updateLoggedIn(data)
+    io.to(data.room).emit('logged in array updated', companyloggedInUsers)
+  })
 })
