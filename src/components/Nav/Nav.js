@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import { logoutUser } from '../../redux/userReducer'
 import Axios from 'axios'
 import {withRouter} from 'react-router-dom'
-import io from 'socket.io-client'
 
 class Nav extends Component {
   constructor () {

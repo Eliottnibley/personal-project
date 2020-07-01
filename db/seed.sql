@@ -16,19 +16,9 @@ create table work_users (
     company_id int references company(id)
 );
 
-create table rooms (
-    id serial primary key
-);
-
-create table user_chats (
-    id serial primary key,
-    user_id int references work_users(id),
-    chat_id int references rooms(id)
-);
-
 create table messages (
-    id serial primary key,
-    time timestamp,
+    message_identifier varchar(100),
+    message varchar(1000),
     sender int references work_users(id),
-    room_id int references rooms(id)
+    time timestamp
 )

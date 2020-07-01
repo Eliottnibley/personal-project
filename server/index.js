@@ -48,6 +48,9 @@ app.post('/api/mailer', mailer.mailer)
 
 // company endpoints
 app.get('/api/company/members/:id', compCtlr.getMembers)
+app.get('/api/company/chat', compCtlr.getMessages)
+app.get('/api/company/:userId', compCtlr.getProfile)
+app.post('/api/company/message', compCtlr.postMessage)
 
 const server = app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`))
 
@@ -89,6 +92,7 @@ app.get('/api/currentLogins', (req, res) => {
 io.on('connection', socket => {
 
   socket.on('join room', data => {
+    console.log(`joined room ${data.room}`)
     socket.join(data.room)
   })
 
@@ -101,5 +105,13 @@ io.on('connection', socket => {
   socket.on('user logged out', (data) => {
     let companyloggedInUsers = updateLoggedIn(data)
     io.to(data.room).emit('logged in array updated', companyloggedInUsers)
+  })
+
+  socket.on('join new company', data => {
+    io.to(data.room).emit('new company member', data)
+  })
+
+  socket.on('message to room', data => {
+    io.to(data.room).emit('sending message to room', data)
   })
 })

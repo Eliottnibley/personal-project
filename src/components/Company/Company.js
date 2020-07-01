@@ -3,12 +3,12 @@ import './Company.css'
 import { connect } from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {Switch, Route} from 'react-router-dom'
-import io from 'socket.io-client'
 import ChatGroups from '../ChatGroups/ChatGroups'
 import Files from '../Files/Files'
 import Projects from '../Projects/Projects'
 import Admin from '../Admin/Admin'
 import ManageMembers from '../ManageMembers/ManageMembers'
+import Chat from '../Chat/Chat'
 import Axios from 'axios'
 import Member from '../Member/Member'
 
@@ -27,6 +27,8 @@ function Company (props) {
       history.push('/joincompany')
     }
     else {
+      props.socket.emit('join room', {room: `company ${props.user.companyId} room`})
+
       Axios.get(`/api/company/members/${props.user.companyId}`)
       .then(res => {
         setmembers(res.data)
@@ -43,13 +45,23 @@ function Company (props) {
         console.log(err)
       })
 
-      props.socket.emit('join room', {room: `company ${props.user.companyId} room`})
-
       props.socket.on('logged in array updated', data => {
         setMembersLoggedIn(data)
       })
+
+      props.socket.on('new company member', data => {
+        delete data.room
+
+        Axios.get(`/api/company/members/${data.companyId}`)
+        .then(res => {
+          setmembers(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
     }
-  }, [history, props.isLoggedIn, props.user.companyId])
+  }, [history, props.isLoggedIn, props.user.companyId, props.socket])
 
 
   function togglePath (path) {
@@ -67,9 +79,12 @@ function Company (props) {
     setSelectedPath(path)
   }
   
-  const membersMap = members.map(elem => {
+  const displayMembers = members.slice()
+  const index = displayMembers.findIndex((elem) => elem.id === props.user.userId)
+  displayMembers.splice(index, 1)
+  const membersMap = displayMembers.map(elem => {
     return (
-      <Member member={elem} loggedIn={membersLoggedIn.includes(elem.id)} key={elem.id}/>
+      <Member myId={props.user.userId} member={elem} loggedIn={membersLoggedIn.includes(elem.id)} key={elem.id}/>
     )
   })
 
@@ -78,6 +93,7 @@ function Company (props) {
       <div className='company-container'>
         <div className='company-content'>
           <Switch>
+            <Route path='/company/chat/:userId' component={Chat}/>
             <Route path='/company/chatgroups' component={ChatGroups}/>
             <Route path='/company/files' component={Files}/>
             <Route path='/company/projects' component={Projects}/>
@@ -106,6 +122,7 @@ function Company (props) {
       <div className='company-container'>
         <div className='company-content'>
           <Switch>
+            <Route path='/company/chat/:userId' component={Chat}/>
             <Route path='/company/chatgroups' component={ChatGroups}/>
             <Route path='/company/files' component={Files}/>
             <Route path='/company/projects' component={Projects}/>

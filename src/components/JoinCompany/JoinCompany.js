@@ -29,8 +29,13 @@ function JoinCompany (props) {
       const user = res.data
     
       await props.loginUser(user)
+
+      props.socket.emit('join new company', {...user, room: `company ${user.companyId}`})
+
+      props.socket.emit('user logged in', {userId: user.userId, companyId: user.companyId, room: `company ${user.companyId} room`})
     }
     catch (err) {
+      console.log(err)
       alert('Access code does not associate with any company')
     }
   }
