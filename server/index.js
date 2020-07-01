@@ -14,6 +14,7 @@ const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING} = process.env
 const app = express() 
 
 app.use(express.static(`${__dirname}/../build`))
+app.use(express.json())
 
 
 app.use(
