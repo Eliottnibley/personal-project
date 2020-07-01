@@ -7,12 +7,13 @@ const { Console } = require('console')
 const authCtlr = require('./controllers/AuthController')
 const mailer = require('./mailer')
 const compCtlr = require('./controllers/companyController')
+const path = require('path')
 
 const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING} = process.env
 
 const app = express() 
 
-app.use(express.json())
+app.use(express.static(`${__dirname}/../build`))
 
 
 app.use(
@@ -114,4 +115,8 @@ io.on('connection', socket => {
   socket.on('message to room', data => {
     io.to(data.room).emit('sending message to room', data)
   })
+})
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'))
 })
