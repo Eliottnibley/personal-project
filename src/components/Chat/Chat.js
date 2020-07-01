@@ -18,8 +18,10 @@ class Chat extends Component {
   }
 
   updateScroll () {
-    var myDiv = document.getElementsByClassName("messages")
-    myDiv.scrollTop = myDiv.scrollHeight
+    setTimeout(() => {
+      let myDiv = document.getElementsByClassName('messages')
+      myDiv[0].scrollTop = myDiv[0].scrollHeight
+    }, 100)
   }
 
   getChatData = async (props) => {
@@ -61,7 +63,6 @@ class Chat extends Component {
     this.props.socket.on('sending message to room', () => {
       Axios.get(`/api/company/chat?userId=${this.state.otherUser.id}&myId=${this.props.user.userId}`)
       .then(res => {
-        console.log(res.data)
         this.setState({messages: res.data})
         this.updateScroll()
       })
@@ -91,6 +92,7 @@ class Chat extends Component {
 
   submit (event) {
     event.preventDefault()
+    event.stopPropagation()
     
     const messageData = {
       text: this.state.inputText,
@@ -134,7 +136,7 @@ class Chat extends Component {
             placeholder={otherUser ? `Messege ${otherUser.firstname} ${otherUser.lastname}` : ''}
             value={inputText}
             onChange={e => this.setState({inputText: e.target.value})}></input>
-            <button onClick='return formOnSubmit()'>Send</button>
+            <button onClick={(e) => this.submit(e)}>Send</button>
           </form> 
         </div>
       </div>
