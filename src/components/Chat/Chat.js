@@ -13,6 +13,13 @@ class Chat extends Component {
       inputText: '',
       currentRoom: ''
     }
+
+    this.sendMessage = this.sendMessage.bind(this)
+  }
+
+  updateScroll () {
+    var myDiv = document.getElementsByClassName("messages")
+    myDiv.scrollTop = myDiv.scrollHeight
   }
 
   getChatData = async (props) => {
@@ -35,6 +42,7 @@ class Chat extends Component {
     const profile = await Axios.get(`/api/company/${userId}`)
 
     this.setState({otherUser: profile.data})
+    this.updateScroll()
   }
 
   componentWillMount() {
@@ -55,6 +63,7 @@ class Chat extends Component {
       .then(res => {
         console.log(res.data)
         this.setState({messages: res.data})
+        this.updateScroll()
       })
       .catch(err => {
         console.log(err)
@@ -63,6 +72,26 @@ class Chat extends Component {
   }
 
   sendMessage () {
+    const messageData = {
+      text: this.state.inputText,
+      time: new Date(),
+      sender: this.props.user.userId,
+      identifier: this.state.currentRoom
+    }
+
+    Axios.post('/api/company/message', messageData)
+    .then(res => {
+      this.props.socket.emit('message to room', {room: this.state.currentRoom})
+      this.setState({inputText: ''})
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  submit (event) {
+    event.preventDefault()
+    
     const messageData = {
       text: this.state.inputText,
       time: new Date(),
@@ -100,11 +129,13 @@ class Chat extends Component {
           {messagesMap}
         </div>
         <div className='input-bar'>
-          <input 
-          placeholder={otherUser ? `Messege ${otherUser.firstname} ${otherUser.lastname}` : ''}
-          value={inputText}
-          onChange={e => this.setState({inputText: e.target.value})}></input>
-          <button onClick={() => this.sendMessage()}>Send</button>
+          <form onSubmit={e => this.submit(e)}>
+            <input 
+            placeholder={otherUser ? `Messege ${otherUser.firstname} ${otherUser.lastname}` : ''}
+            value={inputText}
+            onChange={e => this.setState({inputText: e.target.value})}></input>
+            <button onClick='return formOnSubmit()'>Send</button>
+          </form> 
         </div>
       </div>
     )

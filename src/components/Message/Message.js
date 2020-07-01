@@ -11,8 +11,10 @@ function Message (props) {
   const {messageData, isSender} = props
   const {message, message_identifier, sender, time} = messageData
   return (
-    <div className='message-container'>
-      {message}
+    <div className={`message-spacer-${isSender}`}>
+      <div className={isSender ? 'sent-message' : 'recieved-message'}>
+        {message}
+      </div>
     </div>
   )
 }

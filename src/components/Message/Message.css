@@ -1,0 +1,56 @@
+.message-spacer-true {
+  width: 100%;
+  padding: 0px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sent-message {
+  background-color: rgb(84, 252, 106);
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  max-width: 500px;
+  display: inline-block;
+  position: relative;
+}
+
+.sent-message:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 5px solid transparent;
+  border-right: 5px solid rgb(84, 252, 106);
+  border-top: 5px solid rgb(84, 252, 106);
+  border-bottom: 5px solid transparent;
+  right: 5px;
+  bottom: -6px;
+}
+
+.recieved-message {
+  background-color: rgb(231, 231, 231);
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  max-width: 500px;
+  display: inline-block;
+  position: relative;
+}
+
+.recieved-message:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 5px solid rgb(231, 231, 231);
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgb(231, 231, 231);
+  border-bottom: 5px solid transparent;
+  left: 5px;
+  bottom: -6px;
+}
