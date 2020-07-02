@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import { logoutUser } from '../../redux/userReducer'
 import Axios from 'axios'
 import {withRouter} from 'react-router-dom'
+import { logout } from '../../../server/controllers/AuthController'
 
 class Nav extends Component {
   constructor () {
@@ -15,7 +16,9 @@ class Nav extends Component {
   }
 
   componenDidMount () {
-    
+    window.onunload = function () {
+      logout()
+    }
   }
 
   toggleSelect (path){
