@@ -20,7 +20,7 @@ function Message (props) {
     hour -= 12
     morn = 'AM'
   }
-  if(hour == 0){
+  if(hour === 0){
     hour = 12
   }
   const newTime = `${hour}:${min} ${morn}`

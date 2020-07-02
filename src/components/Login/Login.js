@@ -28,7 +28,6 @@ function Login (props) {
     Axios.post('/api/auth/login', user)
     .then(res => {
       props.loginUser(res.data)
-      console.log(res.data)
 
       props.socket.emit('user logged in', {userId: res.data.userId, companyId: res.data.companyId, room: `company ${res.data.companyId} room`})
 
