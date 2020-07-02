@@ -44,3 +44,9 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 900px){
+  .input-bar form {
+    width: calc(100vw - 225px)
+  }
+}

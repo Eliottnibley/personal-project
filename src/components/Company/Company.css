@@ -81,5 +81,13 @@
 }
 
 @media (max-width: 900px) {
+  .company-nav {
+    width: 200px;
+  }
+
+  .company-content {
+    width: calc(100vw - 225px)
+  }
+
   
 }
