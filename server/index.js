@@ -84,8 +84,8 @@ const updateLoggedIn = (user) => {
 }
 
 // this will return the users curently logged in
-app.get('/api/currentLogins', (req, res) => {
-  const {companyId} = req.query
+app.get('/api/currentLogins/:companyId', (req, res) => {
+  const {companyId} = req.params
   const companyloggedIn = updateLoggedIn({companyId: parseInt(companyId)})
   
   res.status(200).send(companyloggedIn)

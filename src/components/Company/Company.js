@@ -37,7 +37,8 @@ function Company (props) {
         console.log(err)
       })
 
-      Axios.get(`/api/currentLogins?companyId=${props.user.companyId}`)
+      console.log(props.user.companyId)
+      Axios.get(`/api/currentLogins/${props.user.companyId}`)
       .then(res => {
         setMembersLoggedIn(res.data)
       })
@@ -50,8 +51,6 @@ function Company (props) {
       })
 
       props.socket.on('new company member', data => {
-        delete data.room
-
         Axios.get(`/api/company/members/${data.companyId}`)
         .then(res => {
           setmembers(res.data)
