@@ -37,7 +37,6 @@ function Company (props) {
         console.log(err)
       })
 
-      console.log(props.user.companyId)
       Axios.get(`/api/currentLogins/${props.user.companyId}`)
       .then(res => {
         setMembersLoggedIn(res.data)
