@@ -55,7 +55,7 @@ class Nav extends Component {
       return (
         <div className='nav-container'>
           <h1>
-            WorkSpace
+            AwayOffice365
           </h1>
           <div className='nav-menu'>
             <ul>
@@ -72,11 +72,11 @@ class Nav extends Component {
       return (
         <div className='nav-container'>
           <h1>
-            WorkSpace
+            AwayOffice365
           </h1>
           <div className='nav-menu'>
             <ul>
-              <li className='/' onClick={() => this.toggleSelect('/')}>Home</li>
+              <li className='/profile' onClick={() => this.toggleSelect('/profile')}>Profile</li>
               <li className='/company' onClick={() => this.toggleSelect('/company')}>Company</li>
               <li className='/contactus' onClick={() => this.toggleSelect('/contactus')}>Contact Us</li>
               <li onClick={() => this.logout()}>Logout</li>

@@ -20,7 +20,9 @@ class Chat extends Component {
   updateScroll () {
     setTimeout(() => {
       let myDiv = document.getElementsByClassName('messages')
-      myDiv[0].scrollTop = myDiv[0].scrollHeight
+      if (myDiv[0]) {
+        myDiv[0].scrollTop = myDiv[0].scrollHeight
+      }
     }, 100)
   }
 

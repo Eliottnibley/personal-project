@@ -42,7 +42,7 @@
 }
 
 .recieved-message {
-  background-color: rgb(231, 231, 231);
+  background-color: white;
   padding: 5px;
   padding-left: 10px;
   padding-right: 10px;
@@ -58,9 +58,9 @@
   width: 0px;
   height: 0px;
   position: absolute;
-  border-left: 5px solid rgb(231, 231, 231);
+  border-left: 5px solid white;
   border-right: 5px solid transparent;
-  border-top: 5px solid rgb(231, 231, 231);
+  border-top: 5px solid white;
   border-bottom: 5px solid transparent;
   left: 5px;
   bottom: -6px;

@@ -89,3 +89,18 @@
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 1175px) {
+  .member-container {
+    width: 200px;
+  }
+
+  .member-info {
+    width: 130px;
+    padding-top: 10px;
+  }
+
+  .member-email {
+    display: none;
+  }
+}

@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
 }
 
 .get-started-container h3 {
@@ -48,4 +49,19 @@
   border-radius: 5px;
   color: white;
   background-color: rgb(63, 199, 0);
+}
+
+@media (max-width:1000px){
+  .register-options {
+    width: 600px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .register-options > div {
+    min-height: 380px;
+    min-width: 400px;
+    margin-bottom: 20px;
+  }
 }

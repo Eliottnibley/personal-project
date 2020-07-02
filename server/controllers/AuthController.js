@@ -135,5 +135,19 @@ module.exports = {
     }
 
     return res.status(200).send(req.session.user)
+  },
+
+  editUser: async (req, res) => {
+    const db = req.app.get('db')
+    const {firstname, lastname, email, profilePic, companyId} = req.body
+    const {id} = req.params
+
+    const user = await db.editUser(parseInt(id), firstname, lastname, email, profilePic)
+
+    if (!user[0]) {
+      return res.sendStatus(404)
+    }
+
+    res.status(200).send(user[0])
   }
 }

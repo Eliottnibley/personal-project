@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Axios from 'axios'
 import {connect} from 'react-redux'
+import './ManageMembers.css'
 
 function ManageMembers (props) {
   const [email, setEmail] = useState('')
@@ -24,6 +25,7 @@ function ManageMembers (props) {
 
   return (
     <div className='managemembers-container'>
+      <p>Input the email of someone you wish to invite to participate in your company</p>
       <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='email'></input>
       <button onClick={() => sendInvite()}>Invite New Member</button>
     </div>

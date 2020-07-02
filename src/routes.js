@@ -6,6 +6,7 @@ import GetStarted from './components/GetStarted/GetStarted'
 import RegisterCompany from './components/RegisterCompany/RegisterCompany'
 import Company from './components/Company/Company'
 import JoinCompany from './components/JoinCompany/JoinCompany'
+import Profile from './components/Profile/Profile'
 
 export default (
   <Switch>
@@ -15,5 +16,6 @@ export default (
     <Route path='/registercompany' component={RegisterCompany}/>
     <Route path='/company' component={Company}/>
     <Route path='/joincompany' component={JoinCompany}/>
+    <Route path='/profile' component={Profile}/>
   </Switch>
 )
