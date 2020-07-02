@@ -30,7 +30,7 @@ function JoinCompany (props) {
     
       await props.loginUser(user)
 
-      await props.socket.emit('join new company', {...user, room: `company ${user.companyId} room`})
+      props.socket.emit('join new company', {...user, room: `company ${user.companyId} room`})
 
       props.socket.emit('user logged in', {userId: user.userId, companyId: user.companyId, room: `company ${user.companyId} room`})
     }

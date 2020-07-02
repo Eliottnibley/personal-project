@@ -50,6 +50,7 @@ function Company (props) {
       })
 
       props.socket.on('new company member', data => {
+        console.log(data)
         Axios.get(`/api/company/members/${data.companyId}`)
         .then(res => {
           setmembers(res.data)
