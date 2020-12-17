@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer')
+const smtpTransport = require('nodemailer-smtp-transport')
+// const configMail = require('../bin/config').mail
 
 module.exports = {
   mailer: async (req, res) => {
@@ -6,11 +8,18 @@ module.exports = {
     console.log(accessCode)
   
     let transporter = await nodemailer.createTransport({
-      service: 'gmail',
+      host: 'mail.awayoffice365.com',
+      port: 587,
+      secure: false,
       auth: {
-        user: 'workspace.mailer@gmail.com',
-        pass: 'El!ott624'
+        user: 'eliott',
+        pass: 'eliott'
       }
+      // service: 'gmail',
+      // auth: {
+      //   user: 'workspace.mailer@gmail.com',
+      //   pass: 'El!ott624'
+      // }
     })
 
     transporter.verify(function(error, success) {

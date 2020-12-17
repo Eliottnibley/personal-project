@@ -95,7 +95,6 @@ app.get('/api/currentLogins/:companyId', (req, res) => {
 io.on('connection', socket => {
 
   socket.on('join room', data => {
-    console.log(`joined room ${data.room}`)
     socket.join(data.room)
   })
 
