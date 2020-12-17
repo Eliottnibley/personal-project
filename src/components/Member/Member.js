@@ -20,7 +20,10 @@ function Member (props) {
           {`${member.email}`}
         </div>
         <div className='member-buttons'>
-          <button onClick={() => history.push(`/company/chat/${member.id}`)} className='chatbutton'>Chat</button>
+          <button onClick={() => {
+            props.deSelectPath()
+            history.push(`/company/chat/${member.id}`)}
+           } className='chatbutton'>Chat</button>
         </div>
       </div>
     </div>

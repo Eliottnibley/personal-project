@@ -33,6 +33,10 @@
   padding: 10px;
 }
 
+#profile {
+  font-weight: 700;
+}
+
 .nav-menu ul li:hover {
   cursor: pointer;
   background-color: rgb(83, 168, 253);

@@ -76,9 +76,9 @@ class Nav extends Component {
           </h1>
           <div className='nav-menu'>
             <ul>
-              <li className='/profile' onClick={() => this.toggleSelect('/profile')}>Profile</li>
+              <li id="profile" className='/profile' onClick={() => this.toggleSelect('/profile')}>{`${this.props.user.firstname} ${this.props.user.lastname}`}</li>
               <li className='/company' onClick={() => this.toggleSelect('/company')}>Company</li>
-              <li className='/contactus' onClick={() => this.toggleSelect('/contactus')}>Contact Us</li>
+              {/* <li className='/contactus' onClick={() => this.toggleSelect('/contactus')}>Contact Us</li> */}
               <li onClick={() => this.logout()}>Logout</li>
             </ul>
           </div>

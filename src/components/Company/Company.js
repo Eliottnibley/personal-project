@@ -18,6 +18,7 @@ function Company (props) {
   const [membersLoggedIn, setMembersLoggedIn] = useState([])
   const history = useHistory()
 
+
   useEffect(() => {
     if(!props.isLoggedIn){
       history.push('/')
@@ -77,13 +78,23 @@ function Company (props) {
     elem.className = 'company-selected'
     setSelectedPath(path)
   }
+
+  const deSelectPath = () => {
+    const prevElem = document.getElementsByClassName('company-selected')[0]
+
+    if(prevElem){
+      prevElem.className = selectedPath
+    }
+
+    setSelectedPath('')
+  }
   
   const displayMembers = members.slice()
   const index = displayMembers.findIndex((elem) => elem.id === props.user.userId)
   displayMembers.splice(index, 1)
   const membersMap = displayMembers.map(elem => {
     return (
-      <Member myId={props.user.userId} member={elem} loggedIn={membersLoggedIn.includes(elem.id)} key={elem.id}/>
+      <Member myId={props.user.userId} member={elem} deSelectPath={deSelectPath} loggedIn={membersLoggedIn.includes(elem.id)} key={elem.id}/>
     )
   })
 
