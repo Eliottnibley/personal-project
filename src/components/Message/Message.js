@@ -17,10 +17,10 @@ function Message (props) {
 
   let min = time.substring(19, 21)
   let hour = time.substring(16, 18)
-  let morn = 'PM'
+  let morn = 'AM'
   if (hour > 12){
     hour -= 12
-    morn = 'AM'
+    morn = 'PM'
   }
   if(hour === 0){
     hour = 12
