@@ -20,5 +20,5 @@ create table messages (
     message_identifier varchar(100),
     message varchar(1000),
     sender int references work_users(id),
-    time timestamp
+    time varchar(40)
 )
