@@ -14,7 +14,6 @@ class Chat extends Component {
       currentRoom: ''
     }
 
-    this.sendMessage = this.sendMessage.bind(this)
   }
 
   updateScroll () {
@@ -74,31 +73,18 @@ class Chat extends Component {
     })
   }
 
-  sendMessage () {
-    const messageData = {
-      text: this.state.inputText,
-      time: new Date(),
-      sender: this.props.user.userId,
-      identifier: this.state.currentRoom
-    }
-
-    Axios.post('/api/company/message', messageData)
-    .then(res => {
-      this.props.socket.emit('message to room', {room: this.state.currentRoom})
-      this.setState({inputText: ''})
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  }
-
   submit (event) {
     event.preventDefault()
     event.stopPropagation()
+
+    if (!this.state.inputText) {
+      return
+    }
     
+    const timeStamp = new Date()
     const messageData = {
       text: this.state.inputText,
-      time: new Date(),
+      time: timeStamp,
       sender: this.props.user.userId,
       identifier: this.state.currentRoom
     }
