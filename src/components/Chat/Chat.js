@@ -82,10 +82,6 @@ class Chat extends Component {
     }
     
     const timeStamp = new Date()
-    timeStamp.setFullYear(timeStamp.getUTCFullYear())
-    timeStamp.setMonth(timeStamp.getUTCMonth())
-    timeStamp.setDate(timeStamp.getUTCDate())
-    timeStamp.setHours(timeStamp.getUTCHours())
 
     const messageData = {
       text: this.state.inputText,

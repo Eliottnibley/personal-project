@@ -11,21 +11,12 @@ function Message (props) {
 
   const {messageData, isSender} = props
   let {message, time} = messageData
-  const reference = new Date()
-  const offset = reference.getTimezoneOffset();
 
-  const timeAddition =  offset > 0 ? offset / 60 < 10 ? `+0${offset / 60}:00` : `+${offset / 60}` : offset / 60 < 10 ? `-0${offset / 60}:00` : `-${offset / 60}`
+  time = new Date(time).toString()
+  console.log(time)
 
-  console.log(reference.toISOString().substring(0, 19) + timeAddition)
-
-  var adjustedTime = new Date(reference.toISOString().substring(0, 19) + timeAddition)
-
-  console.log(adjustedTime.toISOString())
-
-  time = adjustedTime.toISOString().split('')
-
-  let min = [time[14], time[15]].join('')
-  let hour = parseInt([time[11], time[12]].join(''))
+  let min = time.substring(19, 21)
+  let hour = time.substring(16, 18)
   let morn = 'PM'
   if (hour > 12){
     hour -= 12
