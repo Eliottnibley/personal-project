@@ -2,8 +2,7 @@ const nodemailer = require('nodemailer')
 
 module.exports = {
   mailer: async (req, res) => {
-    const {email, accessCode} = req.body
-    console.log(accessCode)
+    const {email, accessCode, companyName, firstName, lastName} = req.body
   
     let transporter = await nodemailer.createTransport({
       service: 'gmail',
@@ -31,12 +30,12 @@ module.exports = {
     const instructions = 'color:black;font-size:12px;margin-top:10px;'
     const code = 'font-size:25px;color:dodgerblue;margin:10px;font-weight:600px;'
 
-    const htmlMail = `<div><div style=${titleStyle}>Awayoffice365</div><div style=${container}><div style=${welcome}>Welcome to Awayoffice365!</div><div style=${invite}>You have been invited by person to join a group by the name</div><div style=${company}>companyName</div><div style=${instructions}>Once you have created an account at awayoffice365.com, navigate to the company page and enter your access code where promted to join this group.</div><div style=${code}>${accessCode}</div></div></div>`
+    const htmlMail = `<div><div style=${titleStyle}>Awayoffice365</div><div style=${container}><div style=${welcome}>Welcome to Awayoffice365!</div><div style=${invite}>You have been invited by ${firstName} ${lastName} to join a group by the name</div><div style=${company}>${companyName}</div><div style=${instructions}>Once you have created an account at awayoffice365.com, navigate to the company page and enter your access code where promted to join this group.</div><div style=${code}>${accessCode}</div></div></div>`
 
     const message = {
       from: 'WorkSpace <workspace.mailer@gmail.com>',
       to: email,
-      subject: 'Join Company',
+      subject: `Connect with ${companyName} through Awayoffice365`,
       text: `The code to join the company you have been invited to is ${accessCode}`,
       html: htmlMail
     }

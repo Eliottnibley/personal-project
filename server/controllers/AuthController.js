@@ -104,10 +104,8 @@ module.exports = {
     const {companyId} = req.body
 
     let accessCode = await db.getCode(companyId)
-    accessCode = accessCode[0]
-
-
-    res.status(200).send(accessCode)
+    
+    res.status(200).send(accessCode[0])
   },
 
   joinCompany: async (req, res) => {

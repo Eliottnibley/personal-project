@@ -1,2 +1,2 @@
-select access_code from company
+select access_code, name from company
 where id = $1

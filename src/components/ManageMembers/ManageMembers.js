@@ -9,8 +9,9 @@ function ManageMembers (props) {
   function sendInvite () {
     Axios.post('/api/auth/accesscode', {companyId: props.user.companyId})
     .then (res => {
-      const {access_code} = res.data
-      Axios.post('/api/mailer', {email: email, accessCode: access_code})
+      const {access_code, name} = res.data
+      
+      Axios.post('/api/mailer', {email: email, accessCode: access_code, companyName: name, firstName: props.user.firstname, lastName: props.user.lastname})
       .then(res => {
       console.log('the email sent')
       })
