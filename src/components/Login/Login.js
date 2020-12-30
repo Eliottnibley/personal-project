@@ -34,7 +34,7 @@ function Login (props) {
       history.push('/')
     })
     .catch(err => {
-      alert('Email or Password is incorrect')
+      alert(err)
     })
   }
   

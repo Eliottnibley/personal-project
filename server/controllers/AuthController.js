@@ -5,7 +5,11 @@ module.exports = {
     const db = req.app.get('db')
     const {email, password} = req.body
 
-    const user = await db.checkUser(email)
+    let user = await db.checkUserNoCompany(email)
+    
+    if (user[0].company_id) {
+      user = await db.checkUser(email)
+    }
     if(!user[0]){
       return res.status(404).send('User does not exist')
     }
@@ -19,7 +23,8 @@ module.exports = {
           email: user[0].email,
           profilePic: user[0].profile_pic,
           isAdmin: user[0].is_admin,
-          companyId: user[0].company_id
+          companyId: user[0].company_id,
+          companyName: user[0].name
         }
         return res.status(200).send(req.session.user)
       }
@@ -67,7 +72,8 @@ module.exports = {
         email: user[0].email,
         profilePic: user[0].profile_pic,
         isAdmin: user[0].is_admin,
-        companyId: user[0].company_id
+        companyId: user[0].company_id,
+        companyName: user[0].name
       }
       return res.status(200).send(req.session.user)
     }
@@ -92,7 +98,15 @@ module.exports = {
       return accessCode
     }
 
-    const accessCode = genCode()
+    let codes = await db.getAllAccessCodes()
+    codes = codes.map((elem) => elem.access_code)
+    console.log(codes)
+
+    let accessCode = genCode()
+
+    while (codes.includes(accessCode)) {
+      accessCode = getCode()
+    }
 
     const company = await db.registerCompany(name, accessCode)
 
@@ -129,7 +143,8 @@ module.exports = {
       email: user[0].email,
       profilePic: user[0].profile_pic,
       isAdmin: user[0].is_admin,
-      companyId: user[0].company_id
+      companyId: user[0].company_id,
+      companyName: user[0].name
     }
 
     return res.status(200).send(req.session.user)
