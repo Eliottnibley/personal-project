@@ -69,7 +69,6 @@ class Nav extends Component {
       )
     }
     else {
-      console.log(this.props.user.companyName)
       return (
         <div className='nav-container'>
           <h1>

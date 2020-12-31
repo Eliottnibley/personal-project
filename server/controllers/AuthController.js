@@ -100,7 +100,6 @@ module.exports = {
 
     let codes = await db.getAllAccessCodes()
     codes = codes.map((elem) => elem.access_code)
-    console.log(codes)
 
     let accessCode = genCode()
 
@@ -131,10 +130,11 @@ module.exports = {
     if(!company[0]) {
       return res.status(404).send('Access code does not associate with any company')
     }
-    
     const companyId = company[0].id
 
-    const user = await db.joinCompany(userId, companyId)
+    await db.updateCompany(userId, companyId)
+
+    const user = await db.joinCompany(userId)
 
     req.session.user = {
       userId: user[0].id,
