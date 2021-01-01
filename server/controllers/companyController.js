@@ -45,10 +45,10 @@ module.exports = {
 
   postMessage: async (req, res) => {
     const db = req.app.get('db')
-    const {text, time, sender, identifier} = req.body
+    const {text, time, sender, identifier, read} = req.body
     console.log(time)
 
-    await db.postMessage(identifier, text, sender, time)
+    await db.postMessage(identifier, text, sender, time, read)
 
     res.sendStatus(200)
   }

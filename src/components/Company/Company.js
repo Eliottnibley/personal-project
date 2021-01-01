@@ -33,6 +33,7 @@ function Company (props) {
       Axios.get(`/api/company/members/${props.user.companyId}`)
       .then(res => {
         setmembers(res.data)
+        console.log(members)
       })
       .catch(err => {
         console.log(err)
@@ -51,18 +52,29 @@ function Company (props) {
       })
 
       props.socket.on('new company member', data => {
-        console.log(data)
         Axios.get(`/api/company/members/${data.companyId}`)
         .then(res => {
           setmembers(res.data)
+          props.socket.emit('user logged in', {userId: data.userId, companyId: data.companyId, room: `company ${data.companyId} room`})
         })
         .catch(err => {
           console.log(err)
         })
       })
+
+      
     }
   }, [history, props.isLoggedIn, props.user.companyId, props.socket])
 
+  // if (parseInt(userId) < parseInt(props.user.userId)){
+  //   this.setState({currentRoom: `user${userId}:user${props.user.userId}`})
+  // }
+  // else {
+  //   this.setState({currentRoom: `user${props.user.userId}:user${userId}`})
+  // }
+  function joinAllChatRooms () {
+    console.log(members)
+  }
 
   function togglePath (path) {
     const prevElem = document.getElementsByClassName('company-selected')[0]

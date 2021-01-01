@@ -13,7 +13,6 @@ function Message (props) {
   let {message, time} = messageData
 
   time = new Date(time).toString()
-  console.log(time)
 
   let min = time.substring(19, 21)
   let hour = time.substring(16, 18)

@@ -70,9 +70,17 @@ const updateLoggedIn = (user) => {
     loggedInUsers.splice(index, 1)
   }
   else if(user.userId && user.companyId){
-    loggedInUsers.push(user)
-  }
-  else {
+    let found = false
+    for (let i = 0; i < loggedInUsers.length; i++) {
+      if (loggedInUsers[i].userId == user.userId) {
+        found = true
+        break
+      }
+    }
+
+    if (!found) {
+      loggedInUsers.push(user)
+    }
   }
   
   let companyloggedInUsers = []
@@ -110,6 +118,7 @@ io.on('connection', socket => {
   })
 
   socket.on('join new company', data => {
+    console.log(data)
     io.to(data.room).emit('new company member', data)
   })
 

@@ -39,7 +39,6 @@ class Chat extends Component {
 
     this.props.socket.emit('join room', {room: this.state.currentRoom})
     
-
     this.setState({messages: res.data})
 
     const profile = await Axios.get(`/api/company/${userId}`)
@@ -87,7 +86,8 @@ class Chat extends Component {
       text: this.state.inputText,
       time: timeStamp.toISOString(),
       sender: this.props.user.userId,
-      identifier: this.state.currentRoom
+      identifier: this.state.currentRoom,
+      read: false
     }
 
     Axios.post('/api/company/message', messageData)

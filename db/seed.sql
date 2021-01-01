@@ -20,5 +20,6 @@ create table messages (
     message_identifier varchar(100),
     message varchar(1000),
     sender int references work_users(id),
-    time varchar(40)
+    time varchar(40),
+    read boolean
 )
