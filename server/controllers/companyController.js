@@ -22,16 +22,23 @@ module.exports = {
 
     let messages = []
 
+    const db = req.app.get('db')
+
     if(parseInt(userId) < parseInt(myId)){
-      const db = req.app.get('db')
       messages = await db.getMessages(userId, myId)
     }
     else {
-      const db = req.app.get('db')
       messages = await db.getMessages(myId, userId)
     }
 
-    res.status(200).send(messages)
+    mess = messages.sort((a, b) => {
+      const dateA = new Date(a.time)
+      const dateB = new Date(b.time)
+
+      return dateA.getTime() - dateB.getTime()
+    })
+
+    res.status(200).send(mess)
   },
 
   getProfile: async (req, res) => {
@@ -45,10 +52,27 @@ module.exports = {
 
   postMessage: async (req, res) => {
     const db = req.app.get('db')
-    const {text, time, sender, identifier, read} = req.body
-    console.log(time)
+    const {message, time, sender, identifier, read} = req.body
 
-    await db.postMessage(identifier, text, sender, time, read)
+    await db.postMessage(identifier, message, sender, time, read)
+
+    res.sendStatus(200)
+  },
+
+  getUnreadCount: async (req, res) => {
+    const db = req.app.get('db')
+    const {chatRoom, userId} = req.params
+
+    const count = await db.getUnread(chatRoom, userId)
+    
+    res.status(200).send(count[0])
+  },
+
+  changeRead: async (req, res) => {
+    const db = req.app.get('db')
+    const {chatRoom, myId} = req.params
+
+    await db.changeMessagesRead(chatRoom, myId)
 
     res.sendStatus(200)
   }

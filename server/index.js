@@ -8,6 +8,7 @@ const authCtlr = require('./controllers/AuthController')
 const mailer = require('./mailer')
 const compCtlr = require('./controllers/companyController')
 const path = require('path')
+const { default: Axios } = require('axios')
 
 const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING} = process.env
 
@@ -54,6 +55,8 @@ app.get('/api/company/members/:id', compCtlr.getMembers)
 app.get('/api/company/chat', compCtlr.getMessages)
 app.get('/api/company/:userId', compCtlr.getProfile)
 app.post('/api/company/message', compCtlr.postMessage)
+app.get('/api/messages/unread/:userId/:chatRoom', compCtlr.getUnreadCount)
+app.put('/api/messages/changeRead/:myId/:chatRoom', compCtlr.changeRead)
 
 const server = app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`))
 
@@ -92,12 +95,12 @@ const updateLoggedIn = (user) => {
   return companyloggedInUsers
 }
 
-// this will return the users curently logged in
-app.get('/api/currentLogins/:companyId', (req, res) => {
-  const {companyId} = req.params
+// this will return if a user is curently logged in
+app.get('/api/currentLogins/:companyId/:userId', (req, res) => {
+  const {companyId, userId} = req.params
   const companyloggedIn = updateLoggedIn({companyId: parseInt(companyId)})
   
-  res.status(200).send(companyloggedIn)
+  res.status(200).send(companyloggedIn.includes(userId))
 })
 
 io.on('connection', socket => {
@@ -118,7 +121,6 @@ io.on('connection', socket => {
   })
 
   socket.on('join new company', data => {
-    console.log(data)
     io.to(data.room).emit('new company member', data)
   })
 

@@ -31,7 +31,7 @@ function Login (props) {
 
       props.socket.emit('user logged in', {userId: res.data.userId, companyId: res.data.companyId, room: `company ${res.data.companyId} room`})
 
-      history.push('/')
+      history.push('/company')
     })
     .catch(err => {
       alert(err)

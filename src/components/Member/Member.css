@@ -31,6 +31,16 @@
   border-radius: 50%;
 }
 
+.unread-count {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: red;
+  font-weight: 600;
+}
+
 .pic-container {
   width: 60px;
   height: 60px;
@@ -88,6 +98,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 @media (max-width: 1175px) {

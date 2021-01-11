@@ -15,11 +15,13 @@ import Member from '../Member/Member'
 function Company (props) {
   const [selectedPath, setSelectedPath] = useState('')
   const [members, setmembers] = useState([])
-  const [membersLoggedIn, setMembersLoggedIn] = useState([])
+  const [readFrom, setReadFrom] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
 
 
   useEffect(() => {
+
     if(!props.isLoggedIn){
       history.push('/')
     }
@@ -33,22 +35,9 @@ function Company (props) {
       Axios.get(`/api/company/members/${props.user.companyId}`)
       .then(res => {
         setmembers(res.data)
-        console.log(members)
       })
       .catch(err => {
         console.log(err)
-      })
-
-      Axios.get(`/api/currentLogins/${props.user.companyId}`)
-      .then(res => {
-        setMembersLoggedIn(res.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-      props.socket.on('logged in array updated', data => {
-        setMembersLoggedIn(data)
       })
 
       props.socket.on('new company member', data => {
@@ -64,16 +53,29 @@ function Company (props) {
 
       
     }
-  }, [history, props.isLoggedIn, props.user.companyId, props.socket])
+  }, [history, props.user.companyId, props.socket])
 
-  // if (parseInt(userId) < parseInt(props.user.userId)){
-  //   this.setState({currentRoom: `user${userId}:user${props.user.userId}`})
-  // }
-  // else {
-  //   this.setState({currentRoom: `user${props.user.userId}:user${userId}`})
-  // }
+  useEffect(() => {
+    joinAllChatRooms()
+  }, [members])
+
+  function generateRooms () {
+    return members.map(member => {
+      if (parseInt(member.id) < parseInt(props.user.userId)) {
+        return `user${member.id}:user${props.user.userId}`
+      }
+      else {
+        return `user${props.user.userId}:user${member.id}`
+      }
+    })
+  }
+
   function joinAllChatRooms () {
-    console.log(members)
+    const rooms = generateRooms()
+
+    rooms.forEach(room => {
+      props.socket.emit('join room', {room: room})
+    })
   }
 
   function togglePath (path) {
@@ -105,8 +107,16 @@ function Company (props) {
   const index = displayMembers.findIndex((elem) => elem.id === props.user.userId)
   displayMembers.splice(index, 1)
   const membersMap = displayMembers.map(elem => {
+    let room = ''
+    if (parseInt(elem.id) < parseInt(props.user.userId)) {
+      room = `user${elem.id}:user${props.user.userId}`
+    }
+    else {
+      room = `user${props.user.userId}:user${elem.id}`
+    }
+
     return (
-      <Member myId={props.user.userId} member={elem} deSelectPath={deSelectPath} loggedIn={membersLoggedIn.includes(elem.id)} key={elem.id}/>
+      <Member companyId={props.user.companyId} myId={props.user.userId} readFrom={readFrom} setReadFrom={setReadFrom} socket={props.socket} chatRoom={room} member={elem} deSelectPath={deSelectPath} key={elem.id}/>
     )
   })
 
