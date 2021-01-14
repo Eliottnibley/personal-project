@@ -3,6 +3,7 @@ import './Company.css'
 import { connect } from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {Switch, Route} from 'react-router-dom'
+import Loader from 'react-loader-spinner'
 import ChatGroups from '../ChatGroups/ChatGroups'
 import Files from '../Files/Files'
 import Projects from '../Projects/Projects'
@@ -16,7 +17,7 @@ function Company (props) {
   const [selectedPath, setSelectedPath] = useState('')
   const [members, setmembers] = useState([])
   const [readFrom, setReadFrom] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState([])
   const history = useHistory()
 
 
@@ -50,8 +51,6 @@ function Company (props) {
           console.log(err)
         })
       })
-
-      
     }
   }, [history, props.user.companyId, props.socket])
 
@@ -142,7 +141,7 @@ function Company (props) {
               <li className='/company/admin' onClick={() => togglePath('/company/admin')}>Admin</li>
             </ul>
           </div>
-          <div className='memberlist'>
+          <div className={`memberlist-${false}`}>
             {membersMap}
           </div>
         </div>

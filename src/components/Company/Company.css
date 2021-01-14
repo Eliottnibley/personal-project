@@ -63,7 +63,7 @@
   background-color: dodgerblue
 }
 
-.memberlist {
+.memberlist-false {
   position: absolute;
   top: 30px;
   width: 100%;
@@ -74,6 +74,10 @@
   justify-content: flex-start;
   overflow-y: scroll;
   padding-bottom: 100px;
+}
+
+.memberlist-true {
+  display: none;
 }
 
 @media (max-width: 1075px){

@@ -36,7 +36,6 @@ function Member (props) {
 
     Axios.get(`/api/currentLogins/${props.companyId}/${member.id}`)
       .then(res => {
-        console.log(res.data)
         setIsLoggedIn(res.data)
       })
       .catch(err => {

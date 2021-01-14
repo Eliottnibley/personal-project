@@ -72,6 +72,9 @@ class Chat extends Component {
         .then(res => {
           console.log('messages have been read')
         })
+        .catch(err => {
+          console.log(err)
+        })
       }
     })
   }
